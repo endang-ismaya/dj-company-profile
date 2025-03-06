@@ -1,7 +1,13 @@
 from django.contrib import admin
 from django.core.exceptions import ValidationError
 from app.forms import TestimonialForm
-from app.models import FrequentlyAskedQuestion, GeneralInfo, Service, Testimonial
+from app.models import (
+    ContactFormLog,
+    FrequentlyAskedQuestion,
+    GeneralInfo,
+    Service,
+    Testimonial,
+)
 
 
 @admin.register(GeneralInfo)
@@ -56,3 +62,20 @@ class TestimonialAdmin(admin.ModelAdmin):
 class FrequentlyAskedQuestionAdmin(admin.ModelAdmin):
     list_display = ["question", "answer"]
     search_fields = ["question", "answer"]
+
+
+@admin.register(ContactFormLog)
+class ContactFormLogAdmin(admin.ModelAdmin):
+    list_display = ["email", "is_success", "is_error", "action_time"]
+
+    # show to disable 'add' permission
+    def has_add_permission(self, request):
+        return False
+
+    # show to disable 'delete' permission
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    # show to disable 'change' permission
+    def has_change_permission(self, request, obj=None):
+        return False

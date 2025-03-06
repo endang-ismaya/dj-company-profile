@@ -1,5 +1,12 @@
+from django.utils import timezone
 from django.shortcuts import redirect, render
-from app.models import GeneralInfo, Service, Testimonial, FrequentlyAskedQuestion as FAQ
+from app.models import (
+    GeneralInfo,
+    Service,
+    Testimonial,
+    ContactFormLog,
+    FrequentlyAskedQuestion as FAQ,
+)
 from django.contrib import messages
 
 
@@ -39,5 +46,16 @@ def contact_form(request):
         # skip email configuration from now
         # just sending message
         messages.success(request, f"{name} {email} {subject} {message}")
+
+        ContactFormLog.objects.create(
+            name=name,
+            email=email,
+            subject=subject,
+            message=message,
+            action_time=timezone.now(),
+            is_success=True,
+            is_error=False,
+            error_message="",
+        )
 
     return redirect("app__index")

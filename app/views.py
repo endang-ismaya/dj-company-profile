@@ -1,23 +1,11 @@
 from django.shortcuts import render
 
-from app.models import GeneralInfo
-
-"""
-company_name = models.CharField(max_length=255, default="Company")
-location = models.CharField(max_length=255)
-email = models.EmailField()
-phone = models.CharField(max_length=20)
-open_hours = models.CharField(max_length=100, blank=True, null=True)
-video_url = models.URLField(blank=True, null=True)
-twitter_url = models.URLField(blank=True, null=True)
-facebook_url = models.URLField(blank=True, null=True)
-instagram_url = models.URLField(blank=True, null=True)
-linkedin_url = models.URLField(blank=True, null=True)
-"""
+from app.models import GeneralInfo, Service
 
 
 def index(request):
     general_info = GeneralInfo.objects.first()
+    services = Service.objects.all()
     context = {
         "company_name": general_info.company_name,
         "location": general_info.location,
@@ -29,5 +17,6 @@ def index(request):
         "facebook_url": general_info.facebook_url or "#",
         "instagram_url": general_info.instagram_url or "#",
         "linkedin_url": general_info.linkedin_url or "#",
+        "services": services,
     }
     return render(request, "app/index.html", context)

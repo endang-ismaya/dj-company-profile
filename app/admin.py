@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.core.exceptions import ValidationError
-from app.models import GeneralInfo
+from app.models import GeneralInfo, Service
 
 
 @admin.register(GeneralInfo)
@@ -32,3 +32,9 @@ class GeneralInfoAdmin(admin.ModelAdmin):
     # show to disable 'view' permission
     # def has_view_permission(self, request, obj=None):
     #     return False
+
+
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ["icon", "title", "description"]
+    search_fields = ["title", "description"]

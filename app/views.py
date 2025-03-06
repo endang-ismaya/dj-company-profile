@@ -1,6 +1,6 @@
-from django.shortcuts import render
-
+from django.shortcuts import redirect, render
 from app.models import GeneralInfo, Service, Testimonial, FrequentlyAskedQuestion as FAQ
+from django.contrib import messages
 
 
 def index(request):
@@ -24,3 +24,20 @@ def index(request):
         "faqs": faqs,
     }
     return render(request, "app/index.html", context)
+
+
+def contact_form(request):
+    if request.method == "GET":
+        pass
+
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        subject = request.POST.get("subject")
+        message = request.POST.get("message")
+
+        # skip email configuration from now
+        # just sending message
+        messages.success(request, f"{name} {email} {subject} {message}")
+
+    return redirect("app__index")

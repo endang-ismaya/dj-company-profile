@@ -28,16 +28,30 @@
     <!-- Template Main CSS File -->
     <link href="{% static 'assets/css/main.css' %}" rel="stylesheet" />
 
-    <!--                             =======================================================
+    <!--                                      =======================================================
   * Template Name: Impact
   * Updated: Sep 18 2023 with Bootstrap v5.3.2
   * Template URL: https://bootstrapmade.com/impact-bootstrap-business-website-template/
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
-  ========================================================                             -->
+  ========================================================                                      -->
   </head>
 
   <body>
+    {% for message in messages %}
+      {% if message.tags == 'error' %}
+        <div class="alert alert-danger alert-dismissible fade show sticky-alert" role="alert" style="width: 50%; margin: 0 auto; text-align: center;">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% else %}
+        <div class="alert alert-success alert-dismissible fade show sticky-alert my-5" role="alert" style="width: 50%; margin: 0 auto; text-align: center;">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endif %}
+    {% endfor %}
+
     <!-- ======= Header ======= -->
     {% include 'includes/header.html' %}
     <!-- End Header -->

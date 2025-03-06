@@ -1,12 +1,13 @@
 from django.shortcuts import render
 
-from app.models import GeneralInfo, Service, Testimonial
+from app.models import GeneralInfo, Service, Testimonial, FrequentlyAskedQuestion as FAQ
 
 
 def index(request):
     general_info = GeneralInfo.objects.first()
     services = Service.objects.all()
     testimonials = Testimonial.objects.all()
+    faqs = FAQ.objects.all()
     context = {
         "company_name": general_info.company_name,
         "location": general_info.location,
@@ -20,5 +21,6 @@ def index(request):
         "linkedin_url": general_info.linkedin_url or "#",
         "services": services,
         "testimonials": testimonials,
+        "faqs": faqs,
     }
     return render(request, "app/index.html", context)

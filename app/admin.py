@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.core.exceptions import ValidationError
 from app.forms import TestimonialForm
-from app.models import GeneralInfo, Service, Testimonial
+from app.models import FrequentlyAskedQuestion, GeneralInfo, Service, Testimonial
 
 
 @admin.register(GeneralInfo)
@@ -50,3 +50,9 @@ class TestimonialAdmin(admin.ModelAdmin):
         return "* " * obj.rating_count
 
     display_rating_count.short_description = "Rating"
+
+
+@admin.register(FrequentlyAskedQuestion)
+class FrequentlyAskedQuestionAdmin(admin.ModelAdmin):
+    list_display = ["question", "answer"]
+    search_fields = ["question", "answer"]

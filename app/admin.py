@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.core.exceptions import ValidationError
-from app.models import GeneralInfo, Service
+from app.forms import TestimonialForm
+from app.models import GeneralInfo, Service, Testimonial
 
 
 @admin.register(GeneralInfo)
@@ -38,3 +39,14 @@ class GeneralInfoAdmin(admin.ModelAdmin):
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ["icon", "title", "description"]
     search_fields = ["title", "description"]
+
+
+@admin.register(Testimonial)
+class TestimonialAdmin(admin.ModelAdmin):
+    form = TestimonialForm
+    list_display = ["username", "user_job_title", "display_rating_count", "review"]
+
+    def display_rating_count(self, obj):
+        return "* " * obj.rating_count
+
+    display_rating_count.short_description = "Rating"

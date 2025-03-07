@@ -9,6 +9,7 @@ from app.models import (
     FrequentlyAskedQuestion as FAQ,
 )
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 
 def index(request):
@@ -66,10 +67,44 @@ def contact_form(request):
 
 
 def blog_detail(request, blog_id):
+    general_info = GeneralInfo.objects.first()
     blog = get_object_or_404(Blog, id=blog_id)
     recent_blogs = Blog.objects.all().exclude(id=blog_id).order_by("-created_at")[:2]
     context = {
         "blog": blog,
         "recent_blogs": recent_blogs,
+        "company_name": general_info.company_name,
+        "location": general_info.location,
+        "email": general_info.email,
+        "phone": general_info.phone,
+        "open_hours": general_info.open_hours,
+        "video_url": general_info.video_url or "#",
+        "twitter_url": general_info.twitter_url or "#",
+        "facebook_url": general_info.facebook_url or "#",
+        "instagram_url": general_info.instagram_url or "#",
+        "linkedin_url": general_info.linkedin_url or "#",
     }
     return render(request, "app/blog-detail.html", context)
+
+
+def blogs(request):
+    general_info = GeneralInfo.objects.first()
+    all_blogs = Blog.objects.all().order_by("-created_at")
+    paginator = Paginator(all_blogs, 3)
+    page_number = request.GET.get("page")
+    blogs = paginator.get_page(page_number)
+
+    context = {
+        "blogs": blogs,
+        "company_name": general_info.company_name,
+        "location": general_info.location,
+        "email": general_info.email,
+        "phone": general_info.phone,
+        "open_hours": general_info.open_hours,
+        "video_url": general_info.video_url or "#",
+        "twitter_url": general_info.twitter_url or "#",
+        "facebook_url": general_info.facebook_url or "#",
+        "instagram_url": general_info.instagram_url or "#",
+        "linkedin_url": general_info.linkedin_url or "#",
+    }
+    return render(request, "app/blogs.html", context)

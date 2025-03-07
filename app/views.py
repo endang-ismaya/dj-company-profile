@@ -1,5 +1,5 @@
 from django.utils import timezone
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from app.models import (
     Blog,
     GeneralInfo,
@@ -63,3 +63,11 @@ def contact_form(request):
         )
 
     return redirect("app__index")
+
+
+def blog_detail(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    context = {
+        "blog": blog,
+    }
+    return render(request, "app/blog-detail.html", context)

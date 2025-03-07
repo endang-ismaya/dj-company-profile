@@ -1,4 +1,9 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %}
+<!-- load static -->
+{% load static %}
+
+<!-- block content -->
+{% block content %}
   <!-- ======= Our Services Section ======= -->
   <section id="services" class="services sections-bg">
     <div class="container" data-aos="fade-up">
@@ -127,13 +132,13 @@
 
               <p class="post-category">{{ blog.category }}</p>
 
-              <h2 class="title"><a href="blog-details.html">{{ blog.title }}</a></h2>
+              <h2 class="title"><a href="{% url 'app__blog_detail' blog.id %}" target="_blank">{{ blog.title }}</a></h2>
 
               <div class="d-flex align-items-center">
                 <div class="post-meta">
                   <p class="post-author">{{ blog.author }}</p>
                   <p class="post-date">
-                    <time datetime="2022-01-01">{{ blog.created_at }}</time>
+                    <time datetime="2022-01-01">{{ blog.created_at|timesince }} ago.</time>
                   </p>
                 </div>
               </div>

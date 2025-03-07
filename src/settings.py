@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # internal apps
     "app.apps.AppConfig",
+    # external apps
+    "ckeditor",
 ]
 
 MIDDLEWARE = [
@@ -133,3 +136,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = ""
 EMAIL_HOST_PASSWORD = ""
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# upload
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  # Set to 10MB, for example

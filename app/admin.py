@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.core.exceptions import ValidationError
 from app.forms import TestimonialForm
 from app.models import (
+    Author,
+    Blog,
     ContactFormLog,
     FrequentlyAskedQuestion,
     GeneralInfo,
@@ -79,3 +81,21 @@ class ContactFormLogAdmin(admin.ModelAdmin):
     # show to disable 'change' permission
     def has_change_permission(self, request, obj=None):
         return False
+
+
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = [
+        "title",
+        # "content",
+        "author",
+        "created_at",
+        "category",
+        "blog_image",
+    ]
+    search_fields = ["title", "content", "author"]
+
+
+@admin.register(Author)
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ["first_name", "last_name", "country", "joined_at"]

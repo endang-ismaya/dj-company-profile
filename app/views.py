@@ -1,6 +1,7 @@
 from django.utils import timezone
 from django.shortcuts import redirect, render
 from app.models import (
+    Blog,
     GeneralInfo,
     Service,
     Testimonial,
@@ -15,6 +16,8 @@ def index(request):
     services = Service.objects.all()
     testimonials = Testimonial.objects.all()
     faqs = FAQ.objects.all()
+    recent_blogs = Blog.objects.all().order_by("-created_at")[:3]
+
     context = {
         "company_name": general_info.company_name,
         "location": general_info.location,
@@ -29,6 +32,7 @@ def index(request):
         "services": services,
         "testimonials": testimonials,
         "faqs": faqs,
+        "recent_blogs": recent_blogs,
     }
     return render(request, "app/index.html", context)
 
